@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'search_page.dart';
+import 'weather_current_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -7,60 +8,71 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade50,
+      backgroundColor: const Color(0xFFE3F2FD), // bleu clair
+      appBar: AppBar(
+        title: const Text("CityWeather"),
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+      ),
+
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.cloud, size: 120, color: Colors.blue.shade700),
-
-              const SizedBox(height: 20),
-
-              const Text(
-                "CityWeather",
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // ---- BOUTON RECHERCHE ----
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => SearchPage()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue.shade700,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 40,
                 ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                elevation: 5,
               ),
-
-              const SizedBox(height: 10),
-
-              Text(
-                "Découvrez la météo, partout dans le monde !",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey.shade700,
-                ),
+              child: const Text(
+                "Rechercher une ville",
+                style: TextStyle(fontSize: 18),
               ),
+            ),
 
-              const SizedBox(height: 40),
+            const SizedBox(height: 30),
 
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                  backgroundColor: Colors.blue.shade700,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
+            // ---- BOUTON GPS ----
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => CurrentWeatherPage()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue.shade700,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 40,
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => SearchPage()),
-                  );
-                },
-                child: const Text(
-                  "Commencer",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
+                elevation: 5,
               ),
-            ],
-          ),
+              child: const Text(
+                "Météo de ma position",
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+          ],
         ),
       ),
     );
