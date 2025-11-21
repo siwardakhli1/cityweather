@@ -6,9 +6,8 @@ class WeatherService {
 
   // -------------------------------------------------------------
   // 🔵 MÉTÉO D'UNE COORDONNÉE (lat/lon)
-  // Récupère la météo actuelle (température + vent)
   // -------------------------------------------------------------
-  static Future<Weather?> getWeather(double lat, double lon) async {
+  static Future<Weather> getWeather(double lat, double lon) async {
     final url = Uri.parse(
       "https://api.open-meteo.com/v1/forecast?"
       "latitude=$lat&longitude=$lon&"
@@ -18,26 +17,25 @@ class WeatherService {
     final response = await http.get(url);
 
     if (response.statusCode != 200) {
-      return null;
+      throw Exception("Erreur API météo");
     }
 
     final json = jsonDecode(response.body);
+
     return Weather.fromJson(json);
   }
 
   // -------------------------------------------------------------
   // 🟦 MÉTÉO DE LA POSITION GPS / ACTUELLE
-  // Utilisé dans CurrentWeatherPage
   // -------------------------------------------------------------
-  static Future<Weather?> getCurrentWeather(double lat, double lon) {
+  static Future<Weather> getCurrentWeather(double lat, double lon) {
     return getWeather(lat, lon);
   }
 
   // -------------------------------------------------------------
   // 🟩 MÉTÉO DE LA VILLE RECHERCHÉE
-  // Utilisé dans CityDetailPage
   // -------------------------------------------------------------
-  static Future<Weather?> getCityWeather(double lat, double lon) {
+  static Future<Weather> getCityWeather(double lat, double lon) {
     return getWeather(lat, lon);
   }
 }
